@@ -15,4 +15,11 @@ public class PointOfSale {
     public void setIdPointOfSale(String idPointOfSale) {
         IdPointOfSale = idPointOfSale;
     }
+
+    @Override
+    public String toString() {
+        return "PointOfSale{" +
+                "IdPointOfSale='" + IdPointOfSale + '\'' +
+                '}';
+    }
 }

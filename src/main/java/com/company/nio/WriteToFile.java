@@ -9,7 +9,7 @@ import java.io.OutputStreamWriter;
 import java.util.Map;
 
 public class WriteToFile<K,V> {
-    final static Logger LOGGER = Logger.getLogger(WriteToFile.class);
+    private final static Logger LOGGER = Logger.getLogger(WriteToFile.class);
     private File file;
 
 
@@ -27,15 +27,17 @@ public class WriteToFile<K,V> {
 
     public   void writeStreamToFile(Map<K,V> maps) throws IOException {
         FileOutputStream fileOutputStream =  new FileOutputStream(file);
-        final  OutputStreamWriter outputStreamWriter =  new OutputStreamWriter(fileOutputStream);
+        try(OutputStreamWriter outputStreamWriter =  new OutputStreamWriter(fileOutputStream)){
         maps.forEach((o1, o2) -> {
             try {
                 outputStreamWriter.write(o1 + "  " + o2 + "\n");
             } catch (IOException e) {
-                e.printStackTrace();
+                LOGGER.error(e.getMessage());
             }
-        });
-        outputStreamWriter.flush();
+        });}
+        catch (Exception e) {
+            LOGGER.error(e.getMessage());
+        }
     }
 
 }
